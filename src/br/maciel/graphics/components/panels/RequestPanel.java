@@ -1,19 +1,17 @@
 package br.maciel.graphics.components.panels;
 
-import br.maciel.factory.enums.CookieType;
 import br.maciel.factory.enums.IngredientId;
 import br.maciel.graphics.components.buttons.RequestButton;
 import br.maciel.graphics.components.forms.IngredientForm;
 import br.maciel.utilities.constants.Graphic;
 import br.maciel.utilities.constants.Palette;
-
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class RequestPanel extends BasePanel {
     private final JLabel titleLabel;
@@ -56,6 +54,6 @@ public class RequestPanel extends BasePanel {
         }
         this.add(SelectionPanel.getInstance());
         this.add(RequestButton.getInstance());
-        this.setPreferredSize(new Dimension(250, 100));
+        this.setMaximumSize(new Dimension(300, 100));
     }
 }

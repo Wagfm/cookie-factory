@@ -5,6 +5,8 @@ import br.maciel.factory.cookies.Cookie;
 import br.maciel.factory.enums.IngredientId;
 import br.maciel.graphics.MainFrame;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -35,6 +37,9 @@ public class ReportFileHandler {
 
     public void writeProductData(Cookie cookie) {
         if (cookie == null) return;
+        System.out.println("Got data from Id=" + cookie.getId());
+        DecimalFormat formatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.ENGLISH);
+        formatter.applyPattern("0.000");
         try {
             semaphore.acquire();
             try (FileWriter fileWriter = new FileWriter(Simulation.reportFilePath, true)) {
@@ -42,9 +47,6 @@ public class ReportFileHandler {
                 row.append(",");
                 row.append(cookie.getId());
                 row.append(",");
-                DecimalFormat formatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.ENGLISH);
-                formatter.applyPattern("0.000");
-
                 for (IngredientId ingredientId : IngredientId.values()) {
                     row.append(formatter.format(cookie.getRequestedQuantity(ingredientId)));
                     row.append(",");
@@ -57,6 +59,23 @@ public class ReportFileHandler {
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+        }
+        try (FileWriter totalFileWriter = new FileWriter(Simulation.totalDataFilePath, false)) {
+            try (BufferedReader fileReader = new BufferedReader(new FileReader(Simulation.reportFilePath))) {
+                var reportLines = fileReader.lines().skip(1).toList();
+                int totalCookies = reportLines.size();
+                double totalIngredients = 0;
+                for (String line : reportLines) {
+                    var data = line.split(",");
+                    totalIngredients += Double.parseDouble(data[2]);
+                    totalIngredients += Double.parseDouble(data[3]);
+                    totalIngredients += Double.parseDouble(data[4]);
+                }
+                totalFileWriter.write("Total cookies: " + totalCookies + "\n");
+                totalFileWriter.write("Total ingredients: " + formatter.format(totalIngredients / 1000) + " kg");
+            }
+        } catch (IOException e) {
+            MainFrame.getInstance().showErrorMessage("Error opening report file! Results will not be saved!");
         }
         semaphore.release();
     }

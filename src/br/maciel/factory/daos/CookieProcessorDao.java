@@ -14,7 +14,7 @@ public class CookieProcessorDao {
 
     @Override
     public String toString() {
-        if (this.cookieId == -1) return " ";
+        if (this.cookieId == -1) return "...";
         return "Id=" + this.cookieId;
     }
 }

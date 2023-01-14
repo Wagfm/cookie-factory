@@ -16,8 +16,9 @@ public class Oven extends CookieProcessor implements Runnable {
     public double getProgress() {
         Cookie cookie = this.getCookie();
         if (this.getProcessStart() < 0 || cookie == null) return 1;
+        double requiredTime = this.getCookie().getRequiredTime() * Simulation.TIME_MS;
         double interval = Clock.systemDefaultZone().millis() - this.getProcessStart();
-        return interval / cookie.getRequiredTime();
+        return interval / requiredTime;
     }
 
     @Override
@@ -31,6 +32,7 @@ public class Oven extends CookieProcessor implements Runnable {
             if (Clock.systemDefaultZone().millis() - this.getProcessStart() <= requiredTime) return;
             this.getCookie().setTimeSpent();
             OutputQueue.getInstance().add(this.getCookie());
+            System.out.println("Sent data from Id=" + this.getCookie().getId());
             this.setCookie(null);
             this.setProcessing(false);
         }

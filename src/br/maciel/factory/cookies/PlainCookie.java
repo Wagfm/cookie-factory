@@ -6,6 +6,6 @@ import java.util.Arrays;
 
 public class PlainCookie extends Cookie {
     public PlainCookie() {
-        super(Arrays.asList(BaseQueueId.QUEUE_C, BaseQueueId.QUEUE_B, BaseQueueId.QUEUE_A));
+        super(Arrays.asList(BaseQueueId.QUEUE_A, BaseQueueId.QUEUE_B, BaseQueueId.QUEUE_C));
     }
 }

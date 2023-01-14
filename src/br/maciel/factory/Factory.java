@@ -1,11 +1,14 @@
 package br.maciel.factory;
 
 import br.maciel.factory.cookies.Cookie;
-import br.maciel.factory.daos.CookieProcessorDao;
+import br.maciel.factory.cookies.PlainCookie;
+import br.maciel.factory.cookies.StuffedCookie;
 import br.maciel.factory.daos.BaseQueueDao;
-import br.maciel.factory.enums.CookieProcessorId;
-import br.maciel.factory.enums.IngredientId;
+import br.maciel.factory.daos.CookieProcessorDao;
 import br.maciel.factory.enums.BaseQueueId;
+import br.maciel.factory.enums.CookieProcessorId;
+import br.maciel.factory.enums.CookieType;
+import br.maciel.factory.enums.IngredientId;
 import br.maciel.factory.exceptions.CookieProcessorNotFound;
 import br.maciel.factory.exceptions.ProductionQueueNotFound;
 import br.maciel.factory.processors.CookieProcessor;
@@ -13,9 +16,8 @@ import br.maciel.factory.processors.IngredientMixer;
 import br.maciel.factory.processors.Oven;
 import br.maciel.factory.queues.InputQueue;
 import br.maciel.factory.queues.OutputQueue;
-import br.maciel.utilities.constants.Simulation;
 import br.maciel.utilities.ThreadPoolHandler;
-
+import br.maciel.utilities.constants.Simulation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,12 +36,23 @@ public class Factory implements Runnable {
         return factory;
     }
 
-    public void add(Cookie cookie) {
+    public void add(Map<IngredientId, Double> ingredientsMap, CookieType type) {
+        Cookie cookie;
+        switch (type) {
+            case PLAIN_COOKIE -> cookie = new PlainCookie();
+            case STUFFED_COOKIE -> cookie = new StuffedCookie();
+            default -> cookie = null;
+        }
+        if (cookie == null) return;
+        for (IngredientId id : ingredientsMap.keySet()) {
+            cookie.setRequestedIngredient(id, ingredientsMap.get(id));
+        }
         BaseQueueId smallerQueueId = BaseQueueId.QUEUE_A;
         for (BaseQueueId id : cookie.getAllowedQueues())
             if (this.queueMap.get(id).size() <= this.queueMap.get(smallerQueueId).size()) smallerQueueId = id;
         this.queueMap.get(smallerQueueId).add(cookie);
     }
+
     public BaseQueueDao getInfo(BaseQueueId queueId) {
         InputQueue productionQueue = this.queueMap.get(queueId);
         if (productionQueue == null) throw new ProductionQueueNotFound(queueId);

@@ -3,16 +3,14 @@ package br.maciel.factory.cookies;
 import br.maciel.factory.enums.BaseQueueId;
 import br.maciel.factory.enums.CookieType;
 import br.maciel.factory.enums.IngredientId;
-
 import java.time.Clock;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Cookie {
-    private static final AtomicInteger nextId = new AtomicInteger(1);
+    private static int nextId = 1;
     private final int id;
     private final CookieType cookieType;
     private final List<BaseQueueId> allowedQueues;
@@ -79,6 +77,6 @@ public abstract class Cookie {
     }
 
     private int getNextId() {
-        return nextId.getAndIncrement();
+        return nextId++;
     }
 }

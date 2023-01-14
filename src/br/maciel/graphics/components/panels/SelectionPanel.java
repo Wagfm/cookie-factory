@@ -1,12 +1,11 @@
 package br.maciel.graphics.components.panels;
 
 import br.maciel.factory.enums.CookieType;
-import br.maciel.graphics.components.indicators.BaseRadioButton;
+import br.maciel.graphics.components.forms.BaseRadioButton;
 import br.maciel.utilities.NamesHandler;
-
-import javax.swing.ButtonGroup;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.ButtonGroup;
 
 public class SelectionPanel extends BasePanel {
     private final Map<CookieType, BaseRadioButton> radioButtons;

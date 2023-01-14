@@ -23,6 +23,6 @@ public class ThreadPoolHandler {
     }
 
     private ThreadPoolHandler() {
-        this.threads = Executors.newScheduledThreadPool(24);
+        this.threads = Executors.newScheduledThreadPool(4);
     }
 }

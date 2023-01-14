@@ -47,7 +47,7 @@ public class MainFrame extends JFrame implements Runnable {
     private void setupMainFrame() {
         this.setIconImage(new ImageIcon(Graphic.ICON_PATH).getImage());
         JPanel panel = new JPanel();
-        panel.setBackground(Palette.BLACK);
+        panel.setBackground(Palette.GRAY);
         panel.setLayout(new BorderLayout(5, 0));
         panel.add(CenterPanel.getInstance(), BorderLayout.CENTER);
         this.components.add(CenterPanel.getInstance());

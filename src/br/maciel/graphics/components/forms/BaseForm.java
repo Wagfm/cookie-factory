@@ -2,17 +2,13 @@ package br.maciel.graphics.components.forms;
 
 import br.maciel.utilities.constants.Graphic;
 import br.maciel.utilities.constants.Palette;
-
+import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Rectangle;
 
 public class BaseForm extends JPanel {
     private final JLabel label;
@@ -46,9 +42,9 @@ public class BaseForm extends JPanel {
 
     private void setupLabel(String name) {
         this.label.setFont(new Font(Graphic.DEFAULT_FONT, Font.PLAIN, 20));
-        this.label.setPreferredSize(new Dimension(75, 30));
+        this.label.setPreferredSize(new Dimension(80, 30));
         this.label.setForeground(Palette.BLACK);
-        this.label.setText(name);
+        this.label.setText(name + " (g)");
         this.label.setBackground(Palette.GRAY);
         this.label.setOpaque(true);
     }

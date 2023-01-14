@@ -1,17 +1,15 @@
 package br.maciel.graphics.components.buttons;
 
 import br.maciel.factory.Factory;
-import br.maciel.factory.cookies.Cookie;
-import br.maciel.factory.cookies.PlainCookie;
-import br.maciel.factory.cookies.StuffedCookie;
 import br.maciel.factory.enums.IngredientId;
 import br.maciel.factory.exceptions.InvalidIngredientQuantityRequested;
 import br.maciel.graphics.MainFrame;
 import br.maciel.graphics.components.panels.RequestPanel;
 import br.maciel.graphics.components.panels.SelectionPanel;
 import br.maciel.utilities.constants.Palette;
-
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequestButton extends BaseButton {
     private static RequestButton requestButton;
@@ -28,21 +26,15 @@ public class RequestButton extends BaseButton {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Cookie cookie;
-        switch (SelectionPanel.getInstance().getSelectedType()) {
-            case PLAIN_COOKIE -> cookie = new PlainCookie();
-            case STUFFED_COOKIE -> cookie = new StuffedCookie();
-            default -> cookie = null;
-        }
-        if (cookie == null) return;
+        Map<IngredientId, Double> ingredientsMap = new HashMap<>();
         try {
             for (IngredientId id : IngredientId.values())
-                cookie.setRequestedIngredient(id, RequestPanel.getInstance().getQuantityById(id));
+                ingredientsMap.put(id, RequestPanel.getInstance().getQuantityById(id));
         } catch (InvalidIngredientQuantityRequested exc) {
             MainFrame.getInstance().showErrorMessage(exc.getMessage());
             return;
         }
-        Factory.getInstance().add(cookie);
+        Factory.getInstance().add(ingredientsMap, SelectionPanel.getInstance().getSelectedType());
     }
 
     private RequestButton() {

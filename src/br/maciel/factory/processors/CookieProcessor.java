@@ -26,15 +26,7 @@ public abstract class CookieProcessor implements Runnable {
     }
 
     public Cookie getCookie() {
-        Cookie cookie = null;
-        try {
-            this.semaphore.acquire();
-            cookie = this.cookie;
-            this.semaphore.release();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        return cookie;
+        return this.cookie;
     }
 
     public void setCookie(Cookie cookie) {

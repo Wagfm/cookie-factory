@@ -1,4 +1,4 @@
-package br.maciel.graphics.components.indicators;
+package br.maciel.graphics.components.forms;
 
 import br.maciel.utilities.constants.Graphic;
 import br.maciel.utilities.constants.Palette;

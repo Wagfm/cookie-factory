@@ -5,7 +5,6 @@ import br.maciel.graphics.components.buttons.StartButton;
 import br.maciel.graphics.components.buttons.StopButton;
 import br.maciel.utilities.constants.Graphic;
 
-import javax.swing.BoxLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;

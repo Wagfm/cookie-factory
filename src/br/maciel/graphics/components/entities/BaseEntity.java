@@ -4,11 +4,12 @@ import br.maciel.graphics.components.RefreshableComponent;
 import br.maciel.utilities.constants.Graphic;
 import br.maciel.utilities.constants.Palette;
 
+import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
+
 
 public abstract class BaseEntity extends JLabel implements RefreshableComponent {
 
